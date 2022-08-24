@@ -8,9 +8,9 @@ The project aims to automate Krals Digital's processes.
 
 # Before starting project
 Add the files below to the project root: <br>
-[Arquivos Google Drive](https://drive.google.com/drive/folders/1FK9xGsmsHXF1ZsXLsLcOzXelPuaLrk-F?usp=sharing)
+[Arquivos Google Drive](https://drive.google.com/file/d/1X2yVx8oI5ZrhMVEjlYF3FyqtiKZuo_Th/view?usp=sharing)
 
-Note: The entire project was made in Ubuntu 20.04, so it has the snap where some tools were installed below.
+Note: The entire project was made in POP OS 22.04, so it has the snap where some tools were installed below.
 
 Before starting, you need to have the following tools installed on your machine:
 [Git](https://git-scm.com), [Docker](https://snapcraft.io/docker), [Postman](https://snapcraft.io/postman) e [VSCode](https://snapcraft.io/code)
