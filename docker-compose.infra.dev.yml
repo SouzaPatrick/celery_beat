@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  worker-orbita:
+    container_name: "worker-orbita"
+    image: felipe6659/orbita:latest
+    command: celery -A core worker --loglevel=INFO --max-tasks-per-child=200 -Q "development"
+    volumes:
+      - ./:/code
+    env_file: .env
+    stdin_open: true
+    tty: true
+    restart: always
+    entrypoint: ""
+    depends_on:
+      - redis-orbita
+  
+  beat-orbita:
+    container_name: "beat-orbita"
+    image: felipe6659/orbita:latest
+    command: celery -A core beat --loglevel=DEBUG --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    volumes:
+      - ./:/code
+    env_file: .env
+    stdin_open: true
+    tty: true
+    restart: always
+    entrypoint: ""
+    depends_on:
+      - redis-orbita
+      - worker-orbita
+  
+  redis-orbita:
+    container_name: "redis-orbita"
+    image: redis:5.0
+    ports:
+      - "6379:6379"
+  
+  flower-orbita:
+    container_name: "flower-orbita"
+    image: felipe6659/orbita:latest
+    command: celery -A core flower CELERY_BROKER_URL=redis://redis-orbita:6379
+    volumes:
+       - ./:/code
+    ports:
+      - "5555:5555"
+    env_file: .env
+    restart: always
+    entrypoint: ""
+    depends_on:
+      - redis-orbita
+      - worker-orbita
+      - beat-orbita
+
+
+networks:
+  default:
+    external:
+      name: infra-orbita-network
